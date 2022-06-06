@@ -1,0 +1,1491 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Mr.King&#39;s RP Games - session-summary</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        @font-face {
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+            font-family: Whitney;
+            font-weight: 300;
+        }
+
+        @font-face {
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+            font-family: Whitney;
+            font-weight: 400;
+        }
+
+        @font-face {
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+            font-family: Whitney;
+            font-weight: 500;
+        }
+
+        @font-face {
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+            font-family: Whitney;
+            font-weight: 600;
+        }
+
+        @font-face {
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+            font-family: Whitney;
+            font-weight: 700;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #36393e;
+            color: #dcddde;
+            font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            object-fit: contain;
+            image-rendering: high-quality;
+            image-rendering: -webkit-optimize-contrast;
+        }
+
+        .preamble {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            max-width: 100%;
+            padding: 1rem;
+        }
+
+        .preamble__guild-icon-container {
+            grid-column: 1;
+        }
+
+        .preamble__guild-icon {
+            max-width: 88px;
+            max-height: 88px;
+        }
+
+        .preamble__entries-container {
+            grid-column: 2;
+            margin-left: 1rem;
+        }
+
+        .preamble__entry {
+            margin-bottom: 0.15rem;
+            color: #ffffff;
+            font-size: 1.4rem;
+        }
+
+        .preamble__entry--small {
+            font-size: 1rem;
+        }
+
+        .chatlog {
+            padding: 1rem 0;
+            width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chatlog__message-group {
+            margin-bottom: 1rem;
+        }
+
+        .chatlog__message-container {
+            background-color: transparent;
+            transition: background-color 1s ease;
+        }
+
+        .chatlog__message-container--highlighted {
+            background-color: rgba(114, 137, 218, 0.2);
+        }
+
+        .chatlog__message-container--pinned {
+            background-color: rgba(249, 168, 37, 0.05);
+        }
+
+        .chatlog__message {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            padding: 0.15rem 0;
+            direction: ltr;
+            unicode-bidi: bidi-override;
+        }
+
+        .chatlog__message:hover {
+            background-color: #32353b;
+        }
+
+        .chatlog__message:hover .chatlog__short-timestamp {
+            display: block;
+        }
+
+        .chatlog__message-aside {
+            grid-column: 1;
+            width: 72px;
+            padding: 0.15rem 0.15rem 0 0.15rem;
+            text-align: center;
+        }
+
+        .chatlog__reference-symbol {
+            height: 10px;
+            margin: 6px 4px 4px 36px;
+            border-left: 2px solid #4f545c;
+            border-top: 2px solid #4f545c;
+            border-radius: 8px 0 0 0;
+        }
+
+        .chatlog__avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .chatlog__short-timestamp {
+            display: none;
+            color: #a3a6aa;
+            font-size: 0.75rem;
+            font-weight: 500;
+            direction: ltr;
+            unicode-bidi: bidi-override;
+        }
+
+        .chatlog__message-primary {
+            grid-column: 2;
+            min-width: 0;
+        }
+
+        .chatlog__reference {
+            display: flex;
+            margin-bottom: 0.15rem;
+            align-items: center;
+            color: #b5b6b8;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__reference-avatar {
+            width: 16px;
+            height: 16px;
+            margin-right: 0.25rem;
+            border-radius: 50%;
+        }
+
+        .chatlog__reference-author {
+            margin-right: 0.3rem;
+            font-weight: 600;
+        }
+
+        .chatlog__reference-content {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__reference-link {
+            cursor: pointer;
+        }
+
+        .chatlog__reference-link * {
+            display: inline;
+            pointer-events: none;
+        }
+
+        .chatlog__reference-link .hljs {
+            display: inline;
+        }
+
+        .chatlog__reference-link:hover {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-link:hover *:not(.chatlog__markdown-spoiler) {
+            color: inherit;
+        }
+
+        .chatlog__reference-edited-timestamp {
+            margin-left: 0.25rem;
+            color: #a3a6aa;
+            font-size: 0.75rem;
+            font-weight: 500;
+            direction: ltr;
+            unicode-bidi: bidi-override;
+        }
+
+        .chatlog__header {
+            margin-bottom: 0.1rem;
+        }
+
+        .chatlog__author {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .chatlog__bot-label {
+            position: relative;
+            top: -0.1rem;
+            margin-left: 0.3rem;
+            padding: 0.05rem 0.3rem;
+            border-radius: 3px;
+            background-color: #5865F2;
+            color: #ffffff;
+            font-size: 0.625rem;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        .chatlog__timestamp {
+            margin-left: 0.3rem;
+            color: #a3a6aa;
+            font-size: 0.75rem;
+            font-weight: 500;
+            direction: ltr;
+            unicode-bidi: bidi-override;
+        }
+
+        .chatlog__content {
+            padding-right: 1rem;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+
+        .chatlog__edited-timestamp {
+            margin-left: 0.15rem;
+            color: #a3a6aa;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .chatlog__attachment {
+            position: relative;
+            width: fit-content;
+            margin-top: 0.3rem;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden {
+            cursor: pointer;
+            box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatlog__attachment--hidden * {
+            pointer-events: none;
+        }
+
+        .chatlog__attachment-spoiler-caption {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 999;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #dcddde;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.05rem;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-spoiler-caption {
+            display: block;
+        }
+
+        .chatlog__attachment--hidden:hover .chatlog__attachment-spoiler-caption {
+            color: #fff;
+        }
+
+        .chatlog__attachment-media {
+            max-width: 45vw;
+            max-height: 500px;
+            vertical-align: top;
+            border-radius: 3px;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-media {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic {
+            max-width: 520px;
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            border: 1px solid #292b2f;
+            border-radius: 3px;
+            background-color: #2f3136;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-generic {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic-icon {
+            float: left;
+            width: 30px;
+            height: 100%;
+            margin-right: 10px;
+        }
+
+        .chatlog__attachment-generic-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+
+        .chatlog__attachment-generic-name {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__embed {
+            display: flex;
+            margin-top: 0.3rem;
+            max-width: 520px;
+        }
+
+        .chatlog__embed-color-pill {
+            flex-shrink: 0;
+            width: 0.25rem;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+
+        .chatlog__embed-color-pill--default {
+            background-color: #202225;
+        }
+
+        .chatlog__embed-content-container {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5rem 0.6rem;
+            border: 1px solid rgba(46, 48, 54, 0.6);
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+            background-color: rgba(46, 48, 54, 0.3);
+        }
+
+        .chatlog__embed-content {
+            display: flex;
+            width: 100%;
+        }
+
+        .chatlog__embed-text {
+            flex: 1;
+        }
+
+        .chatlog__embed-author-container {
+            display: flex;
+            margin-bottom: 0.5rem;
+            align-items: center;
+        }
+
+        .chatlog__embed-author-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .chatlog__embed-author {
+            color: #ffffff;
+            font-size: 0.875rem;
+            font-weight: 600;
+            direction: ltr;
+            unicode-bidi: bidi-override;
+        }
+
+        .chatlog__embed-author-link {
+            color: #ffffff;
+        }
+
+        .chatlog__embed-title {
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .chatlog__embed-description {
+            color: #dcddde;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .chatlog__embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 0.5rem;
+        }
+
+        .chatlog__embed-field {
+            flex: 0;
+            min-width: 100%;
+            max-width: 506px;
+            padding-top: 0.6rem;
+            font-size: 0.875rem;
+        }
+
+        .chatlog__embed-field--inline {
+            flex: 1;
+            flex-basis: auto;
+            min-width: 50px;
+        }
+
+        .chatlog__embed-field-name {
+            margin-bottom: 0.2rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .chatlog__embed-field-value {
+            color: #dcddde;
+            font-weight: 500;
+        }
+
+        .chatlog__embed-thumbnail {
+            flex: 0;
+            max-width: 80px;
+            max-height: 80px;
+            margin-left: 1.2rem;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-image-container {
+            margin-top: 0.6rem;
+        }
+
+        .chatlog__embed-image {
+            max-width: 500px;
+            max-height: 400px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-footer {
+            margin-top: 0.6rem;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-footer-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.2rem;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+        .chatlog__embed-footer-text {
+            vertical-align: middle;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .chatlog__embed-plainimage {
+            max-width: 45vw;
+            max-height: 500px;
+            vertical-align: top;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-spotify {
+            border: 0;
+        }
+
+        .chatlog__embed-youtube-container {
+            margin-top: 0.6rem;
+        }
+
+        .chatlog__embed-youtube {
+            border: 0;
+            border-radius: 3px;
+        }
+
+        .chatlog__sticker {
+            width: 180px;
+            height: 180px;
+        }
+
+        .chatlog__sticker--media {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .chatlog__reactions {
+            display: flex;
+        }
+
+        .chatlog__reaction {
+            display: flex;
+            margin: 0.35rem 0.1rem 0.1rem 0;
+            padding: 0.125rem 0.375rem;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            background-color: #2f3136;
+            align-items: center;
+        }
+
+        .chatlog__reaction:hover {
+            border: 1px solid hsla(0,0%,100%,.2);
+            background-color: transparent;
+        }
+
+        .chatlog__reaction-count {
+            min-width: 9px;
+            margin-left: 0.35rem;
+            color: #b9bbbe;
+            font-size: 0.875rem;
+        }
+
+        .chatlog__reaction:hover .chatlog__reaction-count {
+            color: #dcddde;
+        }
+
+        .chatlog__markdown {
+            max-width: 100%;
+            line-height: 1.3;
+            overflow-wrap: break-word;
+        }
+
+        .chatlog__markdown-preserve {
+            white-space: pre-wrap;
+        }
+
+        .chatlog__markdown-spoiler {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .chatlog__markdown-spoiler--hidden {
+            cursor: pointer;
+            background-color: #202225;
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .chatlog__markdown-spoiler--hidden:hover {
+            background-color: rgba(32, 34, 37, 0.8);
+        }
+
+        .chatlog__markdown-spoiler--hidden::selection {
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .chatlog__markdown-quote {
+            display: flex;
+            margin: 0.05rem 0;
+        }
+
+        .chatlog__markdown-quote-border {
+            margin-right: 0.5rem;
+            border: 2px solid #4f545c;
+            border-radius: 3px;
+        }
+
+        .chatlog__markdown-pre {
+            background-color: #2f3136;
+            font-family: "Consolas", "Courier New", Courier, monospace;
+        }
+
+        .chatlog__markdown-pre--multiline {
+            margin-top: 0.25rem;
+            padding: 0.5rem;
+            border: 2px solid #282b30;
+            border-radius: 5px;
+            color: #b9bbbe;
+        }
+
+        .chatlog__markdown-pre--multiline.hljs {
+            background-color: inherit;
+            color: inherit;
+        }
+
+        .chatlog__markdown-pre--inline {
+            padding: 2px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+        }
+
+        .chatlog__markdown-mention {
+            border-radius: 3px;
+            padding: 0 2px;
+            background-color: rgba(88, 101, 242, .3);
+            color: #dee0fc;
+            font-weight: 500;
+        }
+
+        .chatlog__markdown-mention:hover {
+            background-color: #5865f2;
+            color: #ffffff
+        }
+
+        .chatlog__markdown-timestamp {
+            border-radius: 3px;
+            padding: 0 2px;
+            color: #a3a6aa;
+        }
+
+        .chatlog__emoji {
+            width: 1.325rem;
+            height: 1.325rem;
+            margin: 0 0.06rem;
+            vertical-align: -0.4rem;
+        }
+
+        .chatlog__emoji--small {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .chatlog__emoji--large {
+            width: 2.8rem;
+            height: 2.8rem;
+        }
+
+        .postamble {
+            padding: 1.25rem;
+        }
+
+        .postamble__entry {
+            color: #ffffff;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.chatlog__markdown-pre--multiline').forEach(e => hljs.highlightBlock(e));
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.8.1/lottie.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.chatlog__sticker--media[data-source]').forEach(e => {
+                const imageDataUrl = e.getAttribute('data-source');
+
+                const anim = lottie.loadAnimation({
+                  container: e,
+                  renderer: 'svg',
+                  loop: true,
+                  autoplay: true,
+                  path: imageDataUrl
+                });
+
+                anim.addEventListener('data_failed', () =>
+                    e.innerHTML = '<strong>[Sticker cannot be rendered]</strong>'
+                );
+            });
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('chatlog__message-container-' + id);
+            if (!element)
+                return;
+
+            event.preventDefault();
+            element.classList.add('chatlog__message-container--highlighted');
+
+            window.scrollTo({
+                top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                behavior: 'smooth'
+            });
+
+            window.setTimeout(function() {
+                element.classList.remove('chatlog__message-container--highlighted');
+            }, 2000);
+        }
+
+        function showSpoiler(event, element) {
+            if (!element)
+                return;
+
+            if (element.classList.contains('chatlog__attachment--hidden')) {
+                event.preventDefault();
+                element.classList.remove('chatlog__attachment--hidden');
+            }
+
+            if (element.classList.contains('chatlog__markdown-spoiler--hidden')) {
+                event.preventDefault();
+                element.classList.remove('chatlog__markdown-spoiler--hidden');
+            }
+        }
+    </script>
+
+    <svg style="display: none">
+        <symbol id="attachment-icon" viewBox="0 0 720 960">
+            <path fill="#f4f5fb" d="M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z"/>
+            <path fill="#7789c4" d="M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z"/>
+            <path fill="#f4f5fb" d="M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z"/>
+            <path fill="#7789c4" d="M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z"/>
+        </symbol>
+    </svg>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="https://cdn.discordapp.com/icons/891103869097082901/a463d7b6979660de1a49b4eb3496507b.png" alt="Guild icon" loading="lazy">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">Mr.King&#39;s RP Games</div>
+        <div class="preamble__entry">World Of Darkness-The Scottish Holiday / session-summary</div>
+
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+
+<div class="chatlog__message-group">
+    <div id="chatlog__message-container-892137787917213758" class="chatlog__message-container " data-message-id="892137787917213758">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <img class="chatlog__avatar" src="https://cdn.discordapp.com/avatars/294416680799567872/99ab9f059e1aee9c2f699ab371821867.png?size=512" alt="Avatar" loading="lazy">
+            </div>
+
+            <div class="chatlog__message-primary">
+                    <div class="chatlog__header">
+                        <span class="chatlog__author" style="color: rgb(226, 158, 54)" title="OnlyaJedi#3499" data-user-id="294416680799567872">OnlyaJedi</span>
+
+
+                        <span class="chatlog__timestamp">27-Sep-21 03:57 PM</span>
+                    </div>
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve"><em>9/24/2021</em>
+
+Players:  Ethan, Allison, Jack, Jeremiah, Grace. 
+Background knowledge was provided - The story is set in Scotland, in the highlands in the town of Inverness.  The vampire prince in Inverness is name Ian and has a history with Ethan&#39;s character.  The highlands are wild and are the home to werewolves and other creatures of the night - vampires stay close to home when they can help it.  There is a battlefield nearby called Culloden, where many Scotsmen died trying to take back their country over 200 years ago.  There is also a significant hill with standing stones nearby called Clava Cairns - these are host to a large group of mages who use them for their purposes.  
+
+The group of vampires this story revolves around own a pub on the eastern outskirts of Inverness.  This acts as a small source of income for them, as well as a cover.  They have a haven underground, beneath the basement.  They try to keep the clientele to regulars, and few, when they can to avoid attracting notice. 
+
+Character creation was started and will be completed at the next session.  An initial Scene will be begun at the next session.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div id="chatlog__message-container-892138004565614623" class="chatlog__message-container " data-message-id="892138004565614623">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <div class="chatlog__short-timestamp" title="27-Sep-21 03:57 PM">15:57</div>
+            </div>
+
+            <div class="chatlog__message-primary">
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve"><strong>Note</strong>
+Grace left early and did not make her character.  We will not be holding the story for her.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+    <div id="chatlog__message-container-893655381081985076" class="chatlog__message-container " data-message-id="893655381081985076">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <img class="chatlog__avatar" src="https://cdn.discordapp.com/avatars/294416680799567872/99ab9f059e1aee9c2f699ab371821867.png?size=512" alt="Avatar" loading="lazy">
+            </div>
+
+            <div class="chatlog__message-primary">
+                    <div class="chatlog__header">
+                        <span class="chatlog__author" style="color: rgb(226, 158, 54)" title="OnlyaJedi#3499" data-user-id="294416680799567872">OnlyaJedi</span>
+
+
+                        <span class="chatlog__timestamp">01-Oct-21 08:27 PM</span>
+                    </div>
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve"><em>10/1/2021</em>
+
+Players: Allison, Jack, Ethan, Jeremiah
+Character creation was completed and context was given for various Vampire traits and procedures prior to play.  
+
+The scene was set:  The eastern outskirts of Inverness, Scotland.  A pub, once owned by Becca&#39;s parents, now run by The Subway Gang as a cover for operations completed on behalf of Prince Ian.  The Gang has a haven beneath the basement of the pub. At a point in the past, they tried expanding the haven, only to end up connecting to an abandoned series of subway tunnels.  Their haven now includes these tunnels and a few abandoned subway cars.
+
+It is late evening, after the sun has set.  The pub, about the size of Mr. King&#39;s classroom, is cozy with artificial lighting.  8-9 small tables and a medium bar contain a total of about 8 regulars, two small families, and 1 loud, boisterous newcomer.
+
+The Gang plans to close early to make a scheduled pickup at a local distillery.  This is normal practice for them.  The scene begins with Max and Becca behind the bar, Zahir in a corner, avoiding people, and Moonshine in the basement.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div id="chatlog__message-container-893656922027331584" class="chatlog__message-container " data-message-id="893656922027331584">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <div class="chatlog__short-timestamp" title="01-Oct-21 08:33 PM">20:33</div>
+            </div>
+
+            <div class="chatlog__message-primary">
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve">The loud man is described as appearing &quot;like a hippie biker.&quot;  He has been challenging people to arm wrestling competitions and winning money from them most of the evening.  Zahir seems stressed over this and Becca heads to help.  En route she is accosted by the man who challenges her to arm wrestle. She cannot refuse and sits down.
+
+Moonshine heads upstairs as Max heads to Zahir to make sure he&#39;s ok.  The latter two head to the basement to avoid the noise and pass Moonshine on the way.  Becca begins arm wrestling and seems to be holding her own.  The man is surprised.
+
+On their way down the stairs, Zahir trips and falls, hurting himself.  Max and Zahir talk briefly.  Upstairs, things aren&#39;t going well for the biker.  Becca is humiliating him.  He alters his physiology somehow, strengthening his arm and pushing back mightily, but is no match for Becca who smashes his arm into the table, cracking it.
+
+Max hears the crack and, fearing for his tables, heads upstairs.  The man grabs Becca&#39;s arms and pulls her into a grapple.  Tense moments ensue as the Gang seem to be heading toward battle, but Max attempts to talk them down.  The man seems to be able to overcome his anger and steps back, as Becca manages to do the same.  He and Max have a staring match, then the man roars off on a motorcycle.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div id="chatlog__message-container-893657978186653748" class="chatlog__message-container " data-message-id="893657978186653748">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <div class="chatlog__short-timestamp" title="01-Oct-21 08:37 PM">20:37</div>
+            </div>
+
+            <div class="chatlog__message-primary">
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve">Most of the people in the pub have left by now, with the notable exception of the four regulars at the bar, Lorna, Alastair, Lachlan, and Kenna.  Less than a minute later, the Gang hears loud pounding on the door.  At this, the four at the bar scoot out the back door.  The Gang hesitate and eventually the door is reduced to ash.  A tall, imposing man and a very small, young-looking woman enter.  They demand the help of the Gang, implying that &quot;your kind&quot; have stirred up trouble for them.  They provide a bit of a light show to prove they are serious.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+    <div id="chatlog__message-container-896576432443101225" class="chatlog__message-container " data-message-id="896576432443101225">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <img class="chatlog__avatar" src="https://cdn.discordapp.com/avatars/294416680799567872/99ab9f059e1aee9c2f699ab371821867.png?size=512" alt="Avatar" loading="lazy">
+            </div>
+
+            <div class="chatlog__message-primary">
+                    <div class="chatlog__header">
+                        <span class="chatlog__author" style="color: rgb(226, 158, 54)" title="OnlyaJedi#3499" data-user-id="294416680799567872">OnlyaJedi</span>
+
+
+                        <span class="chatlog__timestamp">09-Oct-21 09:54 PM</span>
+                    </div>
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve"><em>10/7/2021</em>
+
+Players: Jeremiah, Allison, Jack, Ethan
+
+The Gang sat down with the mages in the pub for a &quot;chat&quot; (Max on the floor after being kicked there by the small female mage while groveling).  The gist of the situation was that they suspect a vampire has infiltrated the ranks of their magic school, but they are not equipped to either hunt or take down such a creature.  They left in a huff, essentially ordering the Gang to meet them at the school no later than dawn.
+
+The Gang got themselves in order and decided that they needed to meet their supplier at the distillery before doing anything else.  The time was roughly 11:15pm.  The pickup was set for midnight.  They headed out, with Becca at the wheel.  After a couple of rough moments on some very rough roads, the passengers started to realize that they were being followed by <em>something</em>.  (Some of them noticed that 4 wolves were keeping pace with the vehicle, others just noticed something).  
+
+When the Gang came about even with the old Culloden Battlefield, Becca felt a large jolt and a bang.  She lost control of the vehicle and realized that a tire was blow.  They would have to stop. The backseat passengers (Moonshine and Zahir) remained in the truck while Max and Becca got out to take a look.  While Becca was leaned over inspecting the tire, Max got hit with an armor-piercing arrow in the shoulder that pinned him to the truck.  
+
+Over the course of about a minute and a half, Max proceeded to get two more arrows pinning him to the truck.  Becca, rounded the vehicle and tried to make a frantic call to the mages, but her phone also got hit with an arrow.  Both Moonshine and Zahir tried to help Max, but ended up staked with arrows and in torpor.  Throughout it all, the four wolves just sat in the fields, watching.</span>
+
+                    </div>
+
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction" title="thumbsup">
+                                <img class="chatlog__emoji chatlog__emoji--small" alt="&#128077;" src="https://twemoji.maxcdn.com/2/svg/1f44d.svg" loading="lazy">
+                                <span class="chatlog__reaction-count">2</span>
+                            </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div id="chatlog__message-container-896577894711693352" class="chatlog__message-container " data-message-id="896577894711693352">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <div class="chatlog__short-timestamp" title="09-Oct-21 10:00 PM">22:00</div>
+            </div>
+
+            <div class="chatlog__message-primary">
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve">At this point, Max finally noticed their adversary.  A tall woman, dressed in a black hoodie and cutoff military fatigues strode toward him.  He managed to get some of the arrows out of himself before she approached him and held an arrow to his chest, hissing &quot;If you want to live, you&#39;ll come with us.&quot;  Max starts to recognize this person.  The shooting - no one shoots like that.  The walk, the voice - the shrouded face.  Could it be?
+
+The wolves turn into people and guide the Gang back through the Battlefield to a camp in the woods beyond.  It is a mix of large campsite, trailer park, and Woodstock.  There are old RV&#39;s, campers, large tents and even lean-tos everywhere.  They even see a tree house or two.  The werewolves seem rowdy but also seem to care deeply for one another.  
+
+They are led to an old 70&#39;s Winnebago, where they are able to tend to their friends and their wounds.  There they meet an old woman (werewolf?) with braided white hair who is butchering rabbits on the camper table.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div id="chatlog__message-container-896578036319813673" class="chatlog__message-container " data-message-id="896578036319813673">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <div class="chatlog__short-timestamp" title="09-Oct-21 10:01 PM">22:01</div>
+            </div>
+
+            <div class="chatlog__message-primary">
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve"><em>30-45 minutes pass before the next session.  Roleplay opportunities exist for those who want to take them</em></span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+    <div id="chatlog__message-container-898745299584057354" class="chatlog__message-container " data-message-id="898745299584057354">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <img class="chatlog__avatar" src="https://cdn.discordapp.com/avatars/294416680799567872/99ab9f059e1aee9c2f699ab371821867.png?size=512" alt="Avatar" loading="lazy">
+            </div>
+
+            <div class="chatlog__message-primary">
+                    <div class="chatlog__header">
+                        <span class="chatlog__author" style="color: rgb(226, 158, 54)" title="OnlyaJedi#3499" data-user-id="294416680799567872">OnlyaJedi</span>
+
+
+                        <span class="chatlog__timestamp">15-Oct-21 09:32 PM</span>
+                    </div>
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve"><em>10/8/2021 - 10/14/2021</em>
+
+Players: Jack, Max, Jeremiah, Allison
+
+Various RP in the intermediate time via Discord in the RP rooms</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+    <div id="chatlog__message-container-898747759081951272" class="chatlog__message-container " data-message-id="898747759081951272">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <img class="chatlog__avatar" src="https://cdn.discordapp.com/avatars/294416680799567872/99ab9f059e1aee9c2f699ab371821867.png?size=512" alt="Avatar" loading="lazy">
+            </div>
+
+            <div class="chatlog__message-primary">
+                    <div class="chatlog__header">
+                        <span class="chatlog__author" style="color: rgb(226, 158, 54)" title="OnlyaJedi#3499" data-user-id="294416680799567872">OnlyaJedi</span>
+
+
+                        <span class="chatlog__timestamp">15-Oct-21 09:42 PM</span>
+                    </div>
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve"><em>10/15/2021</em>
+
+Players: Allison, Ethan, Jeremiah, Jack
+
+Zahir, Max, and Allison are in a small clearing near Peregrine&#39;s tent.  She recently stalked off after threatening Zahir&#39;s life.  Zahir manages to get himself under control.  The other werewolves are heading to the Meet, so these three also head in that direction.  On the way, they run into a very distressed Moonshine.  The four of them enter the meeting tent.  
+
+Inside, battery operated lanterns are arranged in a circle and werewolves are sitting around the outside.  Mother and Peregrine sit in the center.  Mother begins talking about their &quot;situation&quot; and how they&#39;ve been attack 6 times in the last 2 months.  She says its time they struck at the source and mentions their &quot;guests.&quot;  She says that they have a connection to the source and will be able to help.
+
+Peregrine gives more details and calls out the other werewolves, saying that its time for everyone to stand up and fight, implying that her scouts are exhausted and can&#39;t fight alone anymore.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div id="chatlog__message-container-898748320737009684" class="chatlog__message-container " data-message-id="898748320737009684">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <div class="chatlog__short-timestamp" title="15-Oct-21 09:44 PM">21:44</div>
+            </div>
+
+            <div class="chatlog__message-primary">
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve">Shortly afterward, Redtail bursts into the tent, announcing that three &quot;groups&quot; are attacking, one from the southwest one from the south, and one from the north.  The one from the north is led by a revenant.  Mother gathers two other werewolves and heads out.  The Gang follows Redtail and are themselves followed by Roaring Waters.  They head southwest and engage a horde of zombies who are already in battle with a large group of werwolves.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div id="chatlog__message-container-898749206423044116" class="chatlog__message-container " data-message-id="898749206423044116">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <div class="chatlog__short-timestamp" title="15-Oct-21 09:48 PM">21:48</div>
+            </div>
+
+            <div class="chatlog__message-primary">
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve">The Gang can see that there are hundreds of these zombies.   The battle is close, and there are werewolf deaths.  Becca jumps in the fray quickly and Moonshine attacks. Max starts firing from the sidelines as the others learn that the zombies are vulnerable to headshots.
+
+Peregrine gets in a tight spot, surrounded and outnumbered.  She fights valiantly.  Zahir finds his inner strength and strides into the battle, single-handedly decapitating a zombie.  More keep coming.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div id="chatlog__message-container-898749665682530405" class="chatlog__message-container " data-message-id="898749665682530405">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <div class="chatlog__short-timestamp" title="15-Oct-21 09:50 PM">21:50</div>
+            </div>
+
+            <div class="chatlog__message-primary">
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve">Eventually, Peregrine tactically retreats and approaches the group.  She asks them to leave and warn the vampires in town.  They mention that they do not have a vehicle and she tells them that Moonshine had stolen hers, and that they should just keep it.  They find her black and red 1969 Dodge Charger behind an RV, with Roaring Waters in the back seat.  He introduces himself to the group as Mighty Pines and the group roars off toward Inverness.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+    <div id="chatlog__message-container-899409882183254067" class="chatlog__message-container " data-message-id="899409882183254067">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <img class="chatlog__avatar" src="https://cdn.discordapp.com/avatars/294416680799567872/99ab9f059e1aee9c2f699ab371821867.png?size=512" alt="Avatar" loading="lazy">
+            </div>
+
+            <div class="chatlog__message-primary">
+                    <div class="chatlog__header">
+                        <span class="chatlog__author" style="color: rgb(226, 158, 54)" title="OnlyaJedi#3499" data-user-id="294416680799567872">OnlyaJedi</span>
+
+
+                        <span class="chatlog__timestamp">17-Oct-21 05:33 PM</span>
+                    </div>
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve">Current timeline of events:</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div id="chatlog__message-container-899409895030415432" class="chatlog__message-container " data-message-id="899409895030415432">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <div class="chatlog__short-timestamp" title="17-Oct-21 05:33 PM">17:33</div>
+            </div>
+
+            <div class="chatlog__message-primary">
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve">11:30 - Leave pub
+12:00 - Ambush
+12:45 - Arrive @ werewolf camp
+1:30 - Meet
+2:00 - Leave in Peregrine&#39;s car
+.
+.
+.
+7:30am - SUNRISE</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+    <div id="chatlog__message-container-908891066093162517" class="chatlog__message-container " data-message-id="908891066093162517">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <img class="chatlog__avatar" src="https://cdn.discordapp.com/avatars/294416680799567872/99ab9f059e1aee9c2f699ab371821867.png?size=512" alt="Avatar" loading="lazy">
+            </div>
+
+            <div class="chatlog__message-primary">
+                    <div class="chatlog__header">
+                        <span class="chatlog__author" style="color: rgb(226, 158, 54)" title="OnlyaJedi#3499" data-user-id="294416680799567872">OnlyaJedi</span>
+
+
+                        <span class="chatlog__timestamp">12-Nov-21 08:28 PM</span>
+                    </div>
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve"><em>10/22/2021</em>
+
+Players:  Allison, Ethan, Jack, Jeremiah
+
+The players decide to seek out Ian at his hotel room/ fortress.  During the approach, Max finds 3 envelopes in the glove box.  He reads them before getting out of the car.  Text below:
+
+<strong>Keira Samuels orders:
+REPORT DATE: 9.1.2021
+LOCATION: 23 SAS Special Projects Team
+RAF Ayrshire/ Glasgow Prestwick Airport
+ON LOAN from U.S. Green Berets
+ORDERS: Counter-terrorism, Anti-hijacking, Counter-insurgency - sniper/ scout.
+(The special projects team is the official name for the Special Air Service anti-hijacking counter-terrorism team. It is trained in Close Quarter Battle (CQB), sniper techniques and specializes in hostage rescue in buildings or on public transport)
+
+Sal Roberts Death Certificate:
+3.8.2022
+Report date: 3.11.2022
+Cpt. Sal Roberts
+Died at 2315 3.8.2022
+MALE
+36 years 11 months 3 days
+Cause of Death:  Murder
+Autopsy Report:  Severe Laceration, puncture wounds, loss of blood
+Official’s signature: Lt. Colonel Henry Fetters, RAF Heathrow
+
+1 addressed to:
+674125346 &amp; 999065781
+Cts. Samuels and Roberts
+Det. 2 RAF Ayrshire Box 2035 
+BFPO 
+BF105
+0AX BFPO 15
+MISSING PERSONS REPORT
+MISSING PERSON: Major Valerie Porter
+Filed: 2.2.2022
+Closed: 2.16.2022
+Posted on: 2.17.2022
+Last seen: On Leave from the U.S.N.S Mercy in San Diego
+Reported by: Commanding Officer Colonel Timika Lindsay
+Investigating Officer: Sgt. Darren Foster (Chicago Police Department)
+Reason for Closure: No evidence</strong>
+
+The team enters the hotel and has a <em>discussion</em> with some of Ian&#39;s thugs.  They find that Ian is at their pub.  They leave and head there.  They find the pub filled with Ian&#39;s cronies.  Ian is in the VIP room.   It turns out he had Dominated Moonshine.  He messes with Moonshine&#39;s mind.  He is paranoid about werewolves and mages.</span>
+
+                            <span class="chatlog__edited-timestamp" title="12-Nov-21 08:41 PM">(edited)</span>
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div id="chatlog__message-container-908891183365890079" class="chatlog__message-container " data-message-id="908891183365890079">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <div class="chatlog__short-timestamp" title="12-Nov-21 08:29 PM">20:29</div>
+            </div>
+
+            <div class="chatlog__message-primary">
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve">He is angry that the team worked with both without telling him or involving him.  He kicks them out of their pub and tells them that they are &quot;done.&quot;</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div id="chatlog__message-container-908891412651712513" class="chatlog__message-container " data-message-id="908891412651712513">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <div class="chatlog__short-timestamp" title="12-Nov-21 08:29 PM">20:29</div>
+            </div>
+
+            <div class="chatlog__message-primary">
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve"><em>10/29/2021-11/5/2021</em>
+
+Prequel episodes dedicated to strengthening the team.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+    <div id="chatlog__message-container-908894094682619934" class="chatlog__message-container " data-message-id="908894094682619934">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <img class="chatlog__avatar" src="https://cdn.discordapp.com/avatars/294416680799567872/99ab9f059e1aee9c2f699ab371821867.png?size=512" alt="Avatar" loading="lazy">
+            </div>
+
+            <div class="chatlog__message-primary">
+                    <div class="chatlog__header">
+                        <span class="chatlog__author" style="color: rgb(226, 158, 54)" title="OnlyaJedi#3499" data-user-id="294416680799567872">OnlyaJedi</span>
+
+
+                        <span class="chatlog__timestamp">12-Nov-21 08:40 PM</span>
+                    </div>
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve"><em>11/12/2021</em>
+
+Players: Jack, Ethan, Jeremiah, Allison (Blu on deck)
+
+The characters convene around the 1969 Charger.  Brief discussion ensues and they head to Max&#39;s private apartment.  On the ride, Becca and Zahir notice that the car is riding strangely.  Becca pulls over and she and Max find a stash of black cases in a hidden compartment in the trunk.  While the two are outside, a text message arrives on a phone under the seat of the car.  Zahir finds it and gives it to Max.  It reads &quot;Keep the stash.  You&#39;ll do more good with it than I ever could.  Consider it a parting gift.  -P.&quot;  They continue to the apartment.  Once there, Moonshine calls his military equipment supplier.   The phone Max just got rings. 
+ Turns out, Peregrine was his supplier.  
+
+The team heads into the apartment.  Once inside, Max is <em>insanely</em> forthcoming. They meet his cats, see his home, etc.  He sits them at the kitchen table and tells them everything, his whole story.  He tells them his plans - he wants to take Ian out, and replace him with them, with the team.  He asks them to commit, to tell their own stories and step into his plan. They all agree.  They then bring in the equipment and weapons from the car.  The team lives at the apartment for now.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+    <div id="chatlog__message-container-936797724790100010" class="chatlog__message-container " data-message-id="936797724790100010">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <img class="chatlog__avatar" src="https://cdn.discordapp.com/avatars/294416680799567872/99ab9f059e1aee9c2f699ab371821867.png?size=512" alt="Avatar" loading="lazy">
+            </div>
+
+            <div class="chatlog__message-primary">
+                    <div class="chatlog__header">
+                        <span class="chatlog__author" style="color: rgb(226, 158, 54)" title="OnlyaJedi#3499" data-user-id="294416680799567872">OnlyaJedi</span>
+
+
+                        <span class="chatlog__timestamp">28-Jan-22 08:39 PM</span>
+                    </div>
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve"><em>Recap from Mid-Nov to 1/28</em>
+
+The team assaulted the pub and was able to take Ian down.  Becca found an amazing new skill in the compound box and an ability to summon an inner strength she didn&#39;t know she had.  With a single shot, she staked him through the heart.  The team was able to clean up the rest of the vampires after that, with the help of Regina and one of her Valkyries, Alexandra (Lex).  
+
+After the assault, Regina surprises the team with a document naming the team plus Regina as regents of Inverness and the surrounding area.  They were also invited to a ball in London to celebrate.  The team cleans up and catches their breath.  
+
+They make plans to travel to London via train.  They are going to stay with the Lord of London and the surrounding areas, Lord Voldaren (Regina&#39;s father).  At the ball, they meet and experience the leaders of various vampire sects (the Ordo Dracul, the Lancea Sanctum, and the Circle of the Crone).  Some members accepted membership into these organizations. 
+
+The team enjoys the ball and is honored for their heroics in taking down Ian. Ian in interred in a vault.  The team sleeps, and when they wake up, Regina confronts them with the news that Inverness and the surrounding area has been overrun with zombies.  They need to fly there immediately in the Voldaren&#39;s private helicopter, which the other Valkyrie Gail will fly. 
+
+Upon arrival, the team speaks to Lex and HeOfManyNames in the pub.  They give them the run down and show them a map of the area showing where 4 different groups of zombies have taken over.  Each is led by a revenant with specific characteristics.  The team hot-wires a car and drives to the local village of Cradlehall (sans Zahir, who got attacked and saved by HeOfManyNames).</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div id="chatlog__message-container-936798272394260480" class="chatlog__message-container " data-message-id="936798272394260480">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <div class="chatlog__short-timestamp" title="28-Jan-22 08:41 PM">20:41</div>
+            </div>
+
+            <div class="chatlog__message-primary">
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve">At Cradlehall, the team finds a village acting like nothing happened.  Becca goes into a pub and converses with the locals.  She learns that someone named &quot;Mother&quot; is protecting them.  The rest of the team get into a confrontation out front, and Max gets shot.  Moonshine attacks the man and the man dies, despite Becca&#39;s valiant efforts. The team rages against Moonshine, but before anything can happen, a group of people led by a glowing figure approach, hunting Moonshine and calling him &quot;The diablerist.&quot;  Moonshine breaks free of the group and heads to the people.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+    <div id="chatlog__message-container-936800928621801482" class="chatlog__message-container " data-message-id="936800928621801482">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <img class="chatlog__avatar" src="https://cdn.discordapp.com/avatars/294416680799567872/99ab9f059e1aee9c2f699ab371821867.png?size=512" alt="Avatar" loading="lazy">
+            </div>
+
+            <div class="chatlog__message-primary">
+                    <div class="chatlog__header">
+                        <span class="chatlog__author" style="color: rgb(226, 158, 54)" title="OnlyaJedi#3499" data-user-id="294416680799567872">OnlyaJedi</span>
+
+
+                        <span class="chatlog__timestamp">28-Jan-22 08:52 PM</span>
+                    </div>
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve"><span class="chatlog__markdown-mention">@everyone</span> Sorry I forgot to do this for so long. And sorry I kinda had to jam it all together. <span class="chatlog__markdown-mention" title="LizardBoi#3837">@Antoni [Gabe]</span> Feel free to read through these to familiarize yourself.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+    <div id="chatlog__message-container-941771984713449482" class="chatlog__message-container chatlog__message-container--pinned" data-message-id="941771984713449482">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                    <img class="chatlog__avatar" src="https://cdn.discordapp.com/avatars/570765952665387024/cf3be31cf2e8c93bd0ff46927843e889.png?size=512" alt="Avatar" loading="lazy">
+            </div>
+
+            <div class="chatlog__message-primary">
+                    <div class="chatlog__header">
+                        <span class="chatlog__author" style="color: rgb(216, 6, 6)" title="Max-A-Million#8539" data-user-id="570765952665387024">Louz [Maximilian]</span>
+
+
+                        <span class="chatlog__timestamp">11-Feb-22 02:05 PM</span>
+                    </div>
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve"><a href="https://drive.google.com/drive/folders/1hpuzssLMWkalj55YssmZfYRsuQLTTG3l">https://drive.google.com/drive/folders/1hpuzssLMWkalj55YssmZfYRsuQLTTG3l</a></span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+    <div id="chatlog__message-container-941772004275658852" class="chatlog__message-container " data-message-id="941772004275658852">
+        <div class="chatlog__message">
+            <div class="chatlog__message-aside">
+                        <div class="chatlog__reference-symbol"></div>
+                    <img class="chatlog__avatar" src="https://cdn.discordapp.com/avatars/570765952665387024/cf3be31cf2e8c93bd0ff46927843e889.png?size=512" alt="Avatar" loading="lazy">
+            </div>
+
+            <div class="chatlog__message-primary">
+                        <div class="chatlog__reference">
+                                <div class="chatlog__reference-unknown">
+                                    Original message was deleted or could not be loaded.
+                                </div>
+                        </div>
+                    <div class="chatlog__header">
+                        <span class="chatlog__author" style="color: rgb(216, 6, 6)" title="Max-A-Million#8539" data-user-id="570765952665387024">Louz [Maximilian]</span>
+
+
+                        <span class="chatlog__timestamp">11-Feb-22 02:05 PM</span>
+                    </div>
+
+                    <div class="chatlog__content chatlog__markdown">
+                        <span class="chatlog__markdown-preserve">Pinned a message.</span>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 24 message(s)</div>
+</div>
+
+</body>
+
+</html>
